@@ -1,0 +1,44 @@
+[
+    {
+      "model": "myapp.genre",
+      "pk": 1,
+      "fields": {
+        "genre_name": "Поп"
+      }
+    },
+    {
+      "model": "myapp.album",
+      "pk": 1,
+      "fields": {
+        "album_name": "Thriller",
+        "album_year": "1982-01-01"
+      }
+    },
+    {
+      "model": "myapp.users",
+      "pk": 1,
+      "fields": {
+        "username": "john_doe"
+      }
+    },
+    {
+      "model": "myapp.music",
+      "pk": 1,
+      "fields": {
+        "music_name": "Billie Jean",
+        "album_name": 1,
+        "genre_name": 1,
+        "music_year": "1982-01-01"
+      }
+    },
+    {
+      "model": "myapp.listeninghistory",
+      "pk": 1,
+      "fields": {
+        "user": 1,
+        "music": 1,
+        "genre_points": 1
+      }
+    }
+  ]
+  

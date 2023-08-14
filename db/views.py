@@ -4,7 +4,7 @@ from .models import *
 def create_genre_recommendations(user):
     listened_genres = ListeningHistory.objects.filter(user=user).values('music__genre_name').annotate(total_points=Count('id'))
     
-    max_points = 8  # Максимальный балл
+    max_points = 8  
     recommendations = []
     
     for genre_data in listened_genres:

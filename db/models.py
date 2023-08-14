@@ -8,6 +8,10 @@ from django.db import models
 class Users(models.Model):
     username = models.CharField(max_length=255, unique=True)
 
+    def __str__(self):
+        return self.username
+
+
 class Genre(models.Model):
     genre_name = models.CharField(max_length=255, unique=True)
 
@@ -24,7 +28,7 @@ class Music(models.Model):
 class ListeningHistory(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     music = models.ForeignKey(Music, on_delete=models.CASCADE)
-    genre_points = models.IntegerField(default=0)  # Изменил на 0, так как вы упомянули "плюсуется балл"
+    genre_points = models.IntegerField(default=0)
 
 class Recommendations(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
