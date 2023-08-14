@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "dj-orm"
+version = "0.1.0"
+description = ""
+authors = ["Allen8Kane <allen8kane@gmail.com>"]
+readme = "README.md"
+packages = [{include = "dj_orm"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.2.4"
+requests = "^2.31.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
