@@ -11,7 +11,7 @@ def create_genre_recommendations(user):
         .order_by('-total_points')  # Сортируем по убыванию баллов
     )
 
-    max_points = 8
+    max_points = 10
     recommendations = []
 
     # Увеличиваем баллы для жанра с самым большим количеством баллов
@@ -43,11 +43,15 @@ def main():
     genre_pop, created = Genre.objects.get_or_create(genre_name='Поп')
     genre_rock, created = Genre.objects.get_or_create(genre_name='Рок')
     genre_jazz, created = Genre.objects.get_or_create(genre_name='Джаз')
+    genre_hip_hop, created = Genre.objects.get_or_create(genre_name='Хип-хоп')
+    genre_country, created = Genre.objects.get_or_create(genre_name='Кантри')
 
     # Создаем или получаем альбомы
     album_thriller, created = Album.objects.get_or_create(album_name='Thriller', album_year='1982-01-01')
     album_metallica, created = Album.objects.get_or_create(album_name='Metallica', album_year='1991-08-12')
     album_kind_of_blue, created = Album.objects.get_or_create(album_name='Kind of Blue', album_year='1959-08-17')
+    album_rap_god, created = Album.objects.get_or_create(album_name='Rap God', album_year='2013-10-15')
+    album_golden_hour, created = Album.objects.get_or_create(album_name='Golden Hour', album_year='2018-03-30')
 
     # Создаем или получаем музыку
     music_billie_jean, created = Music.objects.get_or_create(
@@ -68,6 +72,18 @@ def main():
         genre_name=genre_jazz,
         music_year='1959-08-17'
     )
+    music_rap_god, created = Music.objects.get_or_create(
+        music_name='Rap God',
+        album_name=album_rap_god,
+        genre_name=genre_hip_hop,
+        music_year='2013-10-15'
+    )
+    music_butterflies, created = Music.objects.get_or_create(
+        music_name='Butterflies',
+        album_name=album_golden_hour,
+        genre_name=genre_country,
+        music_year='2018-03-30'
+    )
 
     # Создаем или получаем историю прослушиваний
     listening_history_1, created = ListeningHistory.objects.get_or_create(
@@ -85,6 +101,16 @@ def main():
         music=music_so_what,
         genre_points=1
     )
+    listening_history_4, created = ListeningHistory.objects.get_or_create(
+        user=user,
+        music=music_rap_god,
+        genre_points=1
+    )
+    listening_history_5, created = ListeningHistory.objects.get_or_create(
+        user=user,
+        music=music_butterflies,
+        genre_points=1
+    )
 
     # Создаем рекомендации для пользователя на основе прослушанных жанров
     recommendations = create_genre_recommendations(user)
@@ -96,6 +122,18 @@ def main():
         print("Баллы:", recommendation.total_points)
         print("---")
 
+    # Выводим баллы для всех жанров
+    all_genres = Genre.objects.all()
+    print("Баллы для всех жанров:")
+    for genre in all_genres:
+        try:
+            recommendation = Recommendations.objects.get(user=user, genre=genre)
+            print("Жанр:", genre.genre_name)
+            print("Баллы:", recommendation.total_points)
+        except Recommendations.DoesNotExist:
+            print("Жанр:", genre.genre_name)
+            print("Баллы: 0")  # Если нет рекомендации, то баллы равны 0
+        print("---")
 
 if __name__ == "__main__":
     main()
